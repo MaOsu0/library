@@ -25,9 +25,6 @@ class SerializableFileManager implements FileManager {
         } catch (ClassNotFoundException e) {
             throw new DataImportExeption("Niezgodny typ danych w pliku " + FILE_NAME);
         }
-
-
-        return null;
     }
 
     @Override
