@@ -4,9 +4,6 @@ import pl.javastart.library.io.ConsolePrinter;
 import pl.javastart.library.io.DataReader;
 import pl.javastart.library.exception.NoSuchFileTypeExpection;
 
-import java.sql.Struct;
-import java.util.Locale;
-
 public class FileManagerBuilder {
     private ConsolePrinter printer;
     private DataReader reader;
@@ -20,9 +17,11 @@ public class FileManagerBuilder {
         printer.printLine("Wybierz format danych: ");
         FileType fileType = getFileType();
         switch (fileType) {
-
             case SERIAL -> {
                 return new SerializableFileManager();
+            }
+            case CSV -> {
+                return new CsvFileManager();
             }
             default -> throw new NoSuchFileTypeExpection("Nieobsługiwany typ danych");
         }

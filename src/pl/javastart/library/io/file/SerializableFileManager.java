@@ -5,7 +5,6 @@ import pl.javastart.library.exception.DataImportExeption;
 import pl.javastart.library.model.Library;
 
 import java.io.*;
-import java.util.zip.DataFormatException;
 
 class SerializableFileManager implements FileManager {
 
@@ -29,9 +28,9 @@ class SerializableFileManager implements FileManager {
 
     @Override
     public void exportData(Library library) {
-
-        try (FileOutputStream fos = new FileOutputStream(FILE_NAME);
-             ObjectOutputStream oos = new ObjectOutputStream(fos);
+        try (
+                FileOutputStream fos = new FileOutputStream(FILE_NAME);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
         ) {
             oos.writeObject(library);
         } catch (FileNotFoundException e) {

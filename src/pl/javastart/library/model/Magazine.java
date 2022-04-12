@@ -2,12 +2,13 @@ package pl.javastart.library.model;
 
 import java.util.Objects;
 
-public class Magazine extends Publication{
+public class Magazine extends Publication {
+    public static final String TYPE = "Magazyn";
     private int month;
     private int day;
     private String languange;
 
-    public Magazine(String title, String publisher, String languange,int year, int month, int day) {
+    public Magazine(String title, String publisher, int year, String languange, int month, int day) {
         super(title, publisher, year);
         this.languange = languange;
         this.month = month;
@@ -40,7 +41,19 @@ public class Magazine extends Publication{
 
     @Override
     public String toString() {
-        return super.toString() + "; " + month + "; " + day + "; " + languange;
+        return super.toString() + "; " + languange + "; " + month + "; " + day ;
+    }
+
+    @Override
+    public String toCsv() {
+        return TYPE + ";" +
+                getTitle() + ";" +
+                getPublisher() + ";" +
+                getYear() + ";" +
+                languange + ";" +
+                month + ";" +
+                day;
+
     }
 
     @Override
@@ -54,6 +67,6 @@ public class Magazine extends Publication{
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), month, day, languange);
+        return Objects.hash(super.hashCode(),languange, month, day );
     }
 }

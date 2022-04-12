@@ -43,6 +43,8 @@ public abstract class Publication implements Serializable {
         return title + "; " + publisher + "; " + year;
     }
 
+    public abstract String toCsv();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,6 +55,6 @@ public abstract class Publication implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(year, title, publisher);
+        return Objects.hash(title, publisher, year);
     }
 }

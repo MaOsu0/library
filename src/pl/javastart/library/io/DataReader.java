@@ -17,18 +17,18 @@ public class DataReader {
     public Book readAndCreateBook() {
         printer.printLine("Tytuł: ");
         String title = sc.nextLine();
-        printer.printLine("Autor: ");
-        String author = sc.nextLine();
         printer.printLine("Wydawnictwo: ");
         String publisher = sc.nextLine();
-        printer.printLine("ISBN: ");
-        String isbn = sc.nextLine();
         printer.printLine("Rok wydania: ");
         int releaseDate = getInt();
         printer.printLine("Ilość stron: ");
         int pages = getInt();
+        printer.printLine("Autor: ");
+        String author = sc.nextLine();
+        printer.printLine("ISBN: ");
+        String isbn = sc.nextLine();
 
-        return new Book(title, author, releaseDate, pages, publisher, isbn);
+        return new Book(title, publisher, releaseDate, pages, author, isbn);
     }
 
     public Magazine readAndCreateMagazine() {
@@ -36,16 +36,16 @@ public class DataReader {
         String title = sc.nextLine();
         printer.printLine("Wydawnictwo: ");
         String publisher = sc.nextLine();
-        printer.printLine("Język: ");
-        String language = sc.nextLine();
         printer.printLine("Rok wydania: ");
         int year = getInt();
+        printer.printLine("Język: ");
+        String language = sc.nextLine();
         printer.printLine("Miesiąc: ");
         int month = getInt();
         printer.printLine("Dzień: ");
         int day = getInt();
 
-        return new Magazine(title, publisher, language, year, month, day);
+        return new Magazine(title, publisher, year, language, month, day);
     }
 
     public int getInt() {
@@ -62,7 +62,6 @@ public class DataReader {
     }
 
     public void close() {
-
         sc.close();
     }
 }

@@ -2,6 +2,7 @@ package pl.javastart.library.app;
 
 import pl.javastart.library.exception.DataExportExeption;
 import pl.javastart.library.exception.DataImportExeption;
+import pl.javastart.library.exception.InvalidDataExeption;
 import pl.javastart.library.exception.NoSuchOptionException;
 import pl.javastart.library.io.ConsolePrinter;
 import pl.javastart.library.io.DataReader;
@@ -11,8 +12,6 @@ import pl.javastart.library.model.Book;
 import pl.javastart.library.model.Library;
 import pl.javastart.library.model.Magazine;
 import pl.javastart.library.model.Publication;
-
-import java.rmi.server.ExportException;
 import java.util.InputMismatchException;
 
 class LibraryControl {
@@ -26,7 +25,8 @@ class LibraryControl {
         fileManager = new FileManagerBuilder(printer, dataReader).build();
         try {
             library = fileManager.importData();
-        } catch (DataImportExeption e) {
+            printer.printLine("Zaimportowano dane z pliku");
+        } catch (DataImportExeption | InvalidDataExeption e) {
             printer.printLine(e.getMessage());
             printer.printLine("Zainijowano nową bazę");
             library = new Library();
@@ -40,23 +40,12 @@ class LibraryControl {
             printOptions();
             option = getOption();
             switch (option) {
-                case ADD_BOOK:
-                    addBook();
-                    break;
-                case ADD_MAGAZINE:
-                    addMagazine();
-                    break;
-                case PRINT_BOOKS:
-                    printBooks();
-                    break;
-                case PRINT_MAGAZINES:
-                    printMagazines();
-                    break;
-                case EXIT:
-                    exit();
-                    break;
-                default:
-                    printer.printLine("Nie ma takiej opcji, wprowadź ponownie: ");
+                case ADD_BOOK -> addBook();
+                case ADD_MAGAZINE -> addMagazine();
+                case PRINT_BOOKS -> printBooks();
+                case PRINT_MAGAZINES -> printMagazines();
+                case EXIT -> exit();
+                default -> printer.printLine("Nie ma takiej opcji, wprowadź ponownie: ");
             }
         } while (option != Option.EXIT);
     }
@@ -88,7 +77,7 @@ class LibraryControl {
     private void addBook() {
         try {
             Book book = dataReader.readAndCreateBook();
-            library.addBook(book);
+            library.addPublication(book);
         } catch (InputMismatchException e) {
             printer.printLine("Nie udało się utworzyć książki, niepoprawne dane");
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -104,7 +93,7 @@ class LibraryControl {
     private void addMagazine() {
         try {
             Magazine magazine = dataReader.readAndCreateMagazine();
-            library.addMagazine(magazine);
+            library.addPublication(magazine);
         } catch (InputMismatchException e) {
             printer.printLine("Nie udało się utworzyć magazynu, niepoprawne dane");
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -124,8 +113,8 @@ class LibraryControl {
         } catch (DataExportExeption e) {
             printer.printLine(e.getMessage());
         }
-        printer.printLine("Koniec programu, papa!");
         dataReader.close();
+        printer.printLine("Koniec programu, papa!");
     }
 
     private enum Option {
